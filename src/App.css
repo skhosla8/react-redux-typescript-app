@@ -1,0 +1,75 @@
+@import url(https://fonts.googleapis.com/css?family=Montserrat);
+
+.App {
+  font-family: montserrat, arial, verdana;
+  width: 90vw;
+  max-width: 1100px;
+  margin: 0;
+}
+
+.gridContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.05);
+  min-height: 600px;
+}
+
+.gridPosts {
+  flex: 2;
+  min-height: inherit;
+  margin: 1rem 3rem 0 2rem;
+}
+
+.gridForm {
+  flex: 1;
+  margin-right: 2rem;
+}
+
+@media (max-width: 1160px) {
+  .gridContainer {
+    display: grid;
+    grid-template-columns: 1;
+    grid-template-areas:
+      'form'
+      'posts';
+    margin: 2rem 1rem;
+  }
+
+  .gridForm {
+    grid-area: form;
+    margin: 4rem auto;
+  }
+
+  .gridPosts {
+    grid-area: posts;
+    margin: 0;
+    width: 85vw;
+    margin-bottom: 4rem;
+  }
+}
+
+@media (max-width: 830px) {
+  .App {
+    width: 95vw;
+  }
+}
+
+@media (max-width: 800px) {
+  .gridForm {
+    margin: 4rem auto;
+  }
+
+  .gridPosts {
+    margin: 0;
+    width: 90vw;
+    margin-bottom: 4rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .gridContainer {
+    margin: 0.5rem 0;
+  }
+}
