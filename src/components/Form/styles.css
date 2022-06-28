@@ -3,8 +3,8 @@
   justify-content: center;
   align-items: center;
   background-color: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(50px);
-  padding: 1.3rem;
+  backdrop-filter: blur(80px);
+  padding: 1.5rem;
   border-radius: 7px;
 }
 
@@ -14,7 +14,7 @@
   background-color: rgba(255, 255, 255, 0.8);
   width: 370px;
   height: auto;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.5);
 }
 
 .msform-fieldset {
@@ -27,22 +27,54 @@
   border: none;
 }
 
-.msform-fieldset > h2 {
+.msform-fieldset>h2 {
   text-transform: uppercase;
   margin-top: 2.2rem;
 }
 
-.msform-fieldset > h3 {
+.msform-fieldset>h3 {
   font-size: 0.9rem;
-  margin: 0.5rem 0 1.2rem;
+  width: 90%;
+  margin: 0.5rem 0 1.8rem;
+  text-align: center;
 }
 
-.msform-fieldset > input {
-  padding: 0.9rem 0 0.9rem 0.5rem;
-  margin-bottom: 0.6rem;
+.msform-fieldset>h4 {
+  display: flex;
+  align-self: flex-start;
+  font-size: 0.76rem;
+  color: #ff0000;
+  margin: 0.4rem 0 1.5rem 1.5rem;
 }
 
-.msform-fieldset > textarea {
+.msform-fieldset-div {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 85%;
+}
+
+label {
+  display: flex;
+  align-self: flex-start;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin: 0 0 0.4rem 0.1rem;
+}
+
+.msform-fieldset-div>input,
+textarea {
+  padding: 0.8rem 0 0.8rem 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.msform-fieldset-div>input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+.msform-fieldset-div>textarea {
   font-family: arial;
   resize: vertical;
   min-height: 60px;
@@ -51,29 +83,57 @@
 }
 
 .msform-field {
-  outline: none;
-  width: 325px;
-}
-
-.msform-fieldset > button {
-  width: 100px;
-  padding: 0.6rem 0;
-  font-family: inherit;
-  cursor: pointer;
-  margin: 1.2rem 0 2.2rem;
-  background-color: rgba(39, 174, 96, 1);
-  color: #fff;
+  outline: 1px solid rgba(0, 0, 0, 0.4);
   border: none;
-}
-
-.msform-fieldset > button:hover {
-  background-color: rgba(39, 174, 96, 0.9);
+  width: 100%;
+  border-radius: 3px;
 }
 
 .alert {
-  font-size: 0.83rem;
+  display: flex;
+  align-self: flex-start;
+  font-size: 0.8rem;
   color: #ff0000;
-  margin: 0.19rem 0 0.2rem;
+  margin: -1.2rem 0 1.5rem 0rem;
+}
+
+.error-icon {
+  color: #ff0000;
+}
+
+.success-icon {
+  color: rgba(39, 174, 96, 1);
+}
+
+.input-error-icon,
+.input-success-icon {
+  position: absolute;
+  top: 31px;
+  right: 10px;
+}
+
+.textarea-error-icon,
+.textarea-success-icon {
+  position: absolute;
+  top: 38px;
+  right: 10px;
+}
+
+.msform-fieldset>button {
+  width: 85%;
+  padding: 0.8rem 0;
+  font-family: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  margin: 0.7rem 0 3rem;
+  background-color: rgba(39, 174, 96, 1);
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+}
+
+.msform-fieldset>button:hover {
+  background-color: rgba(39, 174, 96, 0.9);
 }
 
 @media (max-width: 500px) {
@@ -84,6 +144,14 @@
   .msform-fieldset {
     width: 60vw;
     text-align: center;
+  }
+
+  .msform-fieldset-div {
+    width: 100%;
+  }
+
+  .msform-fieldset>button {
+    width: 100%;
   }
 
   .msform-field {

@@ -1,5 +1,6 @@
 import React, { FC, useState } from 'react';
 import './styles.css';
+import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 import { useDispatch } from 'react-redux';
 import { Dispatch } from 'redux';
 import { Action } from '../../state/actions';
@@ -8,7 +9,7 @@ import { ActionType } from '../../state/action-types';
 // describe shape of form input 
 export interface FormInput {
   heading?: string;
-  'sub-heading'?: string | number;
+  'sub-heading'?: string;
   summary?: string;
 }
 
@@ -28,6 +29,14 @@ const Form: FC = () => {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement & HTMLTextAreaElement>
   ): void => {
+    let heading = document.querySelector<HTMLInputElement>('#heading')!;
+    let subHeading = document.querySelector<HTMLInputElement>('#sub-heading')!;
+    let summary = document.querySelector<HTMLTextAreaElement>('#summary')!;
+
+    heading.value.length < 1 ? heading.style.outline = '1px solid red' : heading.style.outline = '1px solid rgba(60, 179, 113, 0.4)';
+    subHeading.value.length < 1 ? subHeading.style.outline = '1px solid red' : subHeading.style.outline = '1px solid rgba(60, 179, 113, 0.4)';
+    summary.value.length < 1 ? summary.style.outline = '1px solid red' : summary.style.outline = '1px solid rgba(60, 179, 113, 0.4)';
+
     setFormState({
       ...formState,
       [e.target.name]: e.target.value // find name attribute for each field, set local state based on field name and value   
@@ -36,6 +45,16 @@ const Form: FC = () => {
 
   const resetForm = (): void => {
     setFormState({ ...initialState });
+  };
+
+  const handleErrors = () => {
+    let heading = document.querySelector<HTMLInputElement>('#heading')!;
+    let subHeading = document.querySelector<HTMLInputElement>('#sub-heading')!;
+    let summary = document.querySelector<HTMLTextAreaElement>('#summary')!;
+
+    !formState.heading ? heading.style.outline = '1px solid red' : heading.style.outline = '1px solid rgba(0, 0, 0, 0.4)';
+    !formState['sub-heading'] ? subHeading.style.outline = '1px solid red' : subHeading.style.outline = '1px solid rgba(0, 0, 0, 0.4)';
+    !formState.summary ? summary.style.outline = '1px solid red' : summary.style.outline = '1px solid rgba(0, 0, 0, 0.4)';
   };
 
   const validateForm = (): boolean => {
@@ -64,6 +83,7 @@ const Form: FC = () => {
   const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>): void => {
     e.preventDefault(); // prevent browser reload since data is not being sent to backend
 
+    handleErrors();
     const validated = validateForm();
 
     if (validated) { // if all text fields are filled, proceed with dispatch  
@@ -80,33 +100,52 @@ const Form: FC = () => {
       <form className="msform" autoComplete="off" onSubmit={handleSubmit}>
         <fieldset className="msform-fieldset">
           <h2>Create Post</h2>
-          <h3>Fill all required text fields to submit the form</h3>
-          {errors.heading && <p className="alert">{errors.heading}</p>}
-          <input
-            className="msform-field"
-            type="text"
-            name="heading"
-            value={formState.heading}
-            placeholder="Heading"
-            onChange={handleChange}
-          />
-          {errors['sub-heading'] && <p className="alert">{errors['sub-heading']}</p>}
-          <input
-            className="msform-field"
-            type="text"
-            name="sub-heading"
-            value={formState['sub-heading']}
-            placeholder="Sub-Heading"
-            onChange={handleChange}
-          />
-          {errors.summary && <p className="alert">{errors.summary}</p>}
-          <textarea
-            className="msform-field"
-            name="summary"
-            value={formState.summary}
-            placeholder="Summary"
-            onChange={handleChange}
-          />
+          <h3>Fill all text fields to submit the form</h3>
+
+          <div className="msform-fieldset-div">
+            <label htmlFor="heading">Heading</label>
+            <input
+              id="heading"
+              className="msform-field"
+              type="text"
+              name="heading"
+              value={formState.heading}
+              placeholder="Heading"
+              onChange={handleChange}
+            />
+            {errors.heading && !formState.heading && <ErrorOutlineIcon className="input-error-icon error-icon" />}
+            {errors.heading && !formState.heading && <p className="alert">{errors.heading}</p>}
+          </div>
+
+          <div className="msform-fieldset-div">
+            <label htmlFor="sub-heading">Sub-Heading</label>
+            <input
+              id="sub-heading"
+              className="msform-field"
+              type="text"
+              name="sub-heading"
+              value={formState['sub-heading']}
+              placeholder="Sub-Heading"
+              onChange={handleChange}
+            />
+            {errors['sub-heading'] && !formState['sub-heading'] && <ErrorOutlineIcon className="input-error-icon error-icon" />}
+            {errors['sub-heading'] && !formState['sub-heading'] && <p className="alert">{errors['sub-heading']}</p>}
+          </div>
+
+          <div className="msform-fieldset-div">
+            <label htmlFor="summary">Summary</label>
+            <textarea
+              id="summary"
+              className="msform-field"
+              name="summary"
+              value={formState.summary}
+              placeholder="Summary"
+              onChange={handleChange}
+            />
+            {errors.summary && !formState.summary && <ErrorOutlineIcon className="textarea-error-icon error-icon" />}
+            {errors.summary && !formState.summary && <p className="alert">{errors.summary}</p>}
+          </div>
+
           <button type="submit">
             Submit
           </button>
